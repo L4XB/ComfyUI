@@ -17,6 +17,7 @@ if not has_gpu():
 
 from comfy import ops
 from comfy.quant_ops import QUANT_ALGOS, QuantizedTensor
+import comfy.model_management as mm
 import comfy.utils
 
 
@@ -343,8 +344,6 @@ class TestMixedPrecisionOps(unittest.TestCase):
     def _int8_layer_on_a_device_without_int_mm(self, seed=4242):
         """A loaded int8_tensorwise Linear marked for the dequantized path, as
         pick_operations marks it on a device whose int8 matmul is unusable."""
-        import comfy.model_management as mm
-
         orig_supports_int8 = mm.supports_int8_compute
         mm.supports_int8_compute = lambda device=None: False
         try:
